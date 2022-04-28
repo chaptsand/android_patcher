@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ROOT="${PWD}"
-REPOSITORIES=('')
+REPOSITORIES=('system/vold')
 
 for repository in "${REPOSITORIES[@]}"; do
     cd "${ROOT}/${repository}"

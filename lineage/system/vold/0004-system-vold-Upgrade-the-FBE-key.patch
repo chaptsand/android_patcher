@@ -1,0 +1,99 @@
+From f4a9c0d2f15101f87aa4df685d606e5b52220431 Mon Sep 17 00:00:00 2001
+From: Neeraj Soni <neersoni@codeaurora.org>
+Date: Wed, 26 Feb 2020 15:59:27 +0530
+Subject: [PATCH 4/4] system: vold: Upgrade the FBE key
+
+During OTA upgrades if security state or ROT changes then Keymaster
+keys requires upgrade. So for such usescases, if the FBE ephemeral
+key export fails, check whether KM key requires upgrade and try for
+exporting ephemeral key again.
+
+Conflicts:
+	Keymaster.cpp
+	Keymaster.h
+
+[wight554: Apply changes from CAF 12]
+
+CRs-Fixed: 2632902
+Change-Id: I3ee2fcd97a56b628dc4304867c8f2b8da875f883
+Signed-off-by: Neeraj Soni <neersoni@codeaurora.org>
+Signed-off-by: Volodymyr Zhdanov <wight554@gmail.com>
+---
+ KeyStorage.cpp | 19 ++++++++++++++++++-
+ Keymaster.cpp  |  6 +++---
+ Keymaster.h    |  2 +-
+ 3 files changed, 22 insertions(+), 5 deletions(-)
+ mode change 100644 => 100755 KeyStorage.cpp
+
+diff --git a/KeyStorage.cpp b/KeyStorage.cpp
+old mode 100644
+new mode 100755
+index c83c1eb..0138dae
+--- a/KeyStorage.cpp
++++ b/KeyStorage.cpp
+@@ -176,7 +176,24 @@ bool exportWrappedStorageKey(const KeyBuffer& kmKey, KeyBuffer* key) {
+     if (!keymaster) return false;
+     std::string key_temp;
+ 
+-    if (!keymaster.exportKey(kmKey, &key_temp)) return false;
++    auto ret = keymaster.exportKey(kmKey, &key_temp);
++    if (ret != km::ErrorCode::OK) {
++        if (ret == km::ErrorCode::KEY_REQUIRES_UPGRADE) {
++           // TODO(b/187304488): Re-land the below logic. (keymaster.upgradeKey() was removed)
++           return false;
++           /*
++           std::string kmKeyStr(reinterpret_cast<const char*>(kmKey.data()), kmKey.size());
++           std::string Keystr;
++           if (!keymaster.upgradeKey(kmKeyStr, km::AuthorizationSet(), &Keystr)) return false;
++           KeyBuffer upgradedKey = KeyBuffer(Keystr.size());
++           memcpy(reinterpret_cast<void*>(upgradedKey.data()), Keystr.c_str(), upgradedKey.size());
++           ret = keymaster.exportKey(upgradedKey, &key_temp);
++           if (ret != km::ErrorCode::OK) return false;
++           */
++        } else {
++           return false;
++        }
++    }
+     *key = KeyBuffer(key_temp.size());
+     memcpy(reinterpret_cast<void*>(key->data()), key_temp.c_str(), key->size());
+     return true;
+diff --git a/Keymaster.cpp b/Keymaster.cpp
+index 2314550..4f8444f 100644
+--- a/Keymaster.cpp
++++ b/Keymaster.cpp
+@@ -150,8 +150,8 @@ bool Keymaster::generateKey(const km::AuthorizationSet& inParams, std::string* k
+     return true;
+ }
+ 
+-bool Keymaster::exportKey(const KeyBuffer& kmKey, std::string* key) {
+-    bool ret = false;
++km::ErrorCode Keymaster::exportKey(const KeyBuffer& kmKey, std::string* key) {
++    km::ErrorCode ret = km::ErrorCode::UNKNOWN_ERROR;
+     ks2::KeyDescriptor storageKey = {
+             .domain = ks2::Domain::BLOB,
+             .alias = std::nullopt,
+@@ -168,7 +168,7 @@ bool Keymaster::exportKey(const KeyBuffer& kmKey, std::string* key) {
+ 
+     // TODO b/185811713 store the upgraded key blob if provided and delete the old key blob.
+ 
+-    ret = true;
++    ret = km::ErrorCode::OK;
+ out:
+     zeroize_vector(ephemeral_key_response.ephemeralKey);
+     zeroize_vector(storageKey.blob.value());
+diff --git a/Keymaster.h b/Keymaster.h
+index 47bf4a2..dc5f1a5 100644
+--- a/Keymaster.h
++++ b/Keymaster.h
+@@ -114,7 +114,7 @@ class Keymaster {
+     // Generate a key using keystore2 from the given params.
+     bool generateKey(const km::AuthorizationSet& inParams, std::string* key);
+     // Exports a keystore2 key with STORAGE_KEY tag wrapped with a per-boot ephemeral key
+-    bool exportKey(const KeyBuffer& kmKey, std::string* key);
++    km::ErrorCode exportKey(const KeyBuffer& kmKey, std::string* key);
+     // If supported, permanently delete a key from the keymint device it belongs to.
+     bool deleteKey(const std::string& key);
+     // Begin a new cryptographic operation, collecting output parameters if pointer is non-null
+-- 
+2.25.1
+
