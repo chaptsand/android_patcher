@@ -1,0 +1,37 @@
+From aefbc524a233c055ccde43d3360170fa02272329 Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Sun, 17 Apr 2022 14:45:50 -0400
+Subject: [PATCH 10/10] base: Add com.android.bluetooth to indicator exemptions
+
+Scanning for Bluetooth devices when Bluetooth is enabled is considered
+to be location access. It shouldn't be shown for the OS implementation
+of Bluetooth.
+
+Change-Id: I8072cc7655f5645fe56a8947f437718c275b42bb
+---
+ core/java/android/permission/PermissionManager.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/core/java/android/permission/PermissionManager.java b/core/java/android/permission/PermissionManager.java
+index 102d3a563a9c..3bdc3398fda8 100644
+--- a/core/java/android/permission/PermissionManager.java
++++ b/core/java/android/permission/PermissionManager.java
+@@ -91,6 +91,7 @@ public final class PermissionManager {
+             "permission grant or revoke changed gids";
+ 
+     private static final String SYSTEM_PKG = "android";
++    private static final String BLUETOOTH_PKG = "com.android.bluetooth";
+ 
+     /**
+      * Refuse to install package if groups of permissions are bad
+@@ -943,6 +944,7 @@ public final class PermissionManager {
+         updateIndicatorExemptedPackages(context);
+         ArraySet<String> pkgNames = new ArraySet<>();
+         pkgNames.add(SYSTEM_PKG);
++        pkgNames.add(BLUETOOTH_PKG);
+         for (int i = 0; i < INDICATOR_EXEMPTED_PACKAGES.length; i++) {
+             String exemptedPackage = INDICATOR_EXEMPTED_PACKAGES[i];
+             if (exemptedPackage != null) {
+-- 
+2.36.1
+

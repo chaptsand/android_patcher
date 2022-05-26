@@ -1,0 +1,61 @@
+From 793e273d42cabb523acccd07be4bb33fafb4cb68 Mon Sep 17 00:00:00 2001
+From: Danny Lin <danny@kdrag0n.dev>
+Date: Wed, 16 Feb 2022 22:15:46 -0800
+Subject: [PATCH 09/10] Add config to exempt telephony-related app from
+ location indicators
+
+On some devices, there is a telephony-related app that frequently
+requests location, so exempting it from privacy indicators is desirable.
+For example, the Pixel 6 has an IMS service where this applies.
+
+Change-Id: I5e99c89367bc3ffd31794736b0d66014fdc4faae
+---
+ core/java/android/permission/PermissionManager.java | 2 +-
+ core/res/res/values/config.xml                      | 4 ++++
+ core/res/res/values/public.xml                      | 2 ++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/permission/PermissionManager.java b/core/java/android/permission/PermissionManager.java
+index ddc38729f94d..102d3a563a9c 100644
+--- a/core/java/android/permission/PermissionManager.java
++++ b/core/java/android/permission/PermissionManager.java
+@@ -113,7 +113,7 @@ public final class PermissionManager {
+     private static final int[] EXEMPTED_ROLES = {R.string.config_systemAmbientAudioIntelligence,
+         R.string.config_systemUiIntelligence, R.string.config_systemAudioIntelligence,
+         R.string.config_systemNotificationIntelligence, R.string.config_systemTextIntelligence,
+-        R.string.config_systemVisualIntelligence};
++        R.string.config_systemVisualIntelligence, R.string.config_systemTelephonyPackage};
+ 
+     private static final String[] INDICATOR_EXEMPTED_PACKAGES = new String[EXEMPTED_ROLES.length];
+ 
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index 7305ccc93e93..d3806ebb364b 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -5133,6 +5133,10 @@
+     <!-- On-device package for providing companion device associations. -->
+     <string name="config_systemCompanionDeviceProvider" translatable="false"></string>
+ 
++    <!-- Package name of a telephony-related system app, such as an IMS service.
++         Exempted from privacy indicators. -->
++    <string name="config_systemTelephonyPackage" translatable="false"></string>
++
+     <!-- Whether this device is supporting the microphone toggle -->
+     <bool name="config_supportsMicToggle">false</bool>
+     <!-- Whether this device is supporting the camera toggle -->
+diff --git a/core/res/res/values/public.xml b/core/res/res/values/public.xml
+index 1e30131ae6f9..6a780b4593c6 100644
+--- a/core/res/res/values/public.xml
++++ b/core/res/res/values/public.xml
+@@ -3190,6 +3190,8 @@
+     <public type="string" name="config_systemTextIntelligence" id="0x01040036" />
+     <!-- @hide @SystemApi -->
+     <public type="string" name="config_systemVisualIntelligence" id="0x01040037" />
++    <!-- @hide -->
++    <public type="string" name="config_systemTelephonyPackage" id="0x0104003c" />
+     <!-- @hide @SystemApi -->
+     <public type="string" name="config_systemActivityRecognizer" id="0x01040038" />
+     <!-- @hide @SystemApi -->
+-- 
+2.36.1
+
