@@ -2,7 +2,6 @@
 
 ROOT="${PWD}"
 REPOS=(
-    'build/make'	
     'build/soong'
     'external/tinycompress'
     'frameworks/base'
@@ -15,6 +14,7 @@ REPOS=(
     'system/security'
     'system/sepolicy'
     'system/vold'
+    'vendor/hentai'
 )
 
 for repo in "${REPOS[@]}"; do

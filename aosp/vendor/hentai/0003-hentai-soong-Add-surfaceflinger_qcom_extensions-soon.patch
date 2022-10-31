@@ -1,0 +1,59 @@
+From dbef6200a96325ace21c8d39f8ed296d61421a5e Mon Sep 17 00:00:00 2001
+From: chaptsand <chaptsand@gmail.com>
+Date: Wed, 24 Aug 2022 22:36:04 +0800
+Subject: [PATCH 3/4] hentai: soong: Add surfaceflinger_qcom_extensions soong
+ var
+
+Change-Id: Id1743520268d8f4d833e67823225a33ecf65728e
+---
+ build/soong/Android.bp     | 21 +++++++++++++++++++++
+ config/BoardConfigSoong.mk |  4 +++-
+ 2 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/build/soong/Android.bp b/build/soong/Android.bp
+index 39bb39d..f49aaa7 100644
+--- a/build/soong/Android.bp
++++ b/build/soong/Android.bp
+@@ -35,3 +35,24 @@ extended_compress_format {
+         },
+     },
+ }
++
++soong_config_module_type {
++    name: "surfaceflinger_qcom_extensions",
++    module_type: "cc_defaults",
++    config_namespace: "hentaiQcomVars",
++    value_variables: ["qcom_display_headers_namespace"],
++    properties: [
++        "cppflags",
++        "header_libs",
++    ],
++}
++
++surfaceflinger_qcom_extensions {
++    name: "surfaceflinger_qcom_ext_defaults",
++    soong_config_variables: {
++        qcom_display_headers_namespace: {
++            cppflags: ["-DQCOM_UM_FAMILY"],
++            header_libs: ["//%s:display_intf_headers"],
++        },
++    },
++}
+diff --git a/config/BoardConfigSoong.mk b/config/BoardConfigSoong.mk
+index 1ea612f..c120404 100644
+--- a/config/BoardConfigSoong.mk
++++ b/config/BoardConfigSoong.mk
+@@ -38,7 +38,9 @@ SOONG_CONFIG_hentaiGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFAC
+ 
+ SOONG_CONFIG_NAMESPACES += hentaiQcomVars
+ SOONG_CONFIG_hentaiQcomVars += \
+-    supports_extended_compress_format
++    supports_extended_compress_format \
++    qcom_display_headers_namespace
+ 
+ # Soong value variables
+ SOONG_CONFIG_hentaiQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
++SOONG_CONFIG_hentaiQcomVars_qcom_display_headers_namespace := vendor/qcom/opensource/commonsys-intf/display
+-- 
+2.34.1
+

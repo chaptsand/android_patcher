@@ -1,0 +1,64 @@
+From 39e912b39f6c01aae6320caf4c8ac1b628ffafd7 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@gmail.com>
+Date: Tue, 12 Oct 2021 06:09:57 +0000
+Subject: [PATCH 1/4] Rename fod to udfps
+
+ * now flag is changed to TARGET_SURFACEFLINGER_UDFPS_LIB from TARGET_SURFACEFLINGER_FOD_LIB
+
+Change-Id: I499b31d00a053b865ceaa3b34a9762f980bbf14e
+---
+ build/soong/Android.bp     | 12 ++++++------
+ config/BoardConfigSoong.mk |  6 +++---
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/build/soong/Android.bp b/build/soong/Android.bp
+index 114d09d..f71c478 100644
+--- a/build/soong/Android.bp
++++ b/build/soong/Android.bp
+@@ -1,19 +1,19 @@
+ soong_config_module_type {
+-    name: "surfaceflinger_fod_lib",
++    name: "surfaceflinger_udfps_lib",
+     module_type: "cc_defaults",
+     config_namespace: "hentaiGlobalVars",
+-    value_variables: ["target_surfaceflinger_fod_lib"],
++    value_variables: ["target_surfaceflinger_udfps_lib"],
+     properties: [
+         "cppflags",
+         "whole_static_libs",
+     ],
+ }
+ 
+-surfaceflinger_fod_lib {
+-    name: "surfaceflinger_fod_lib_defaults",
++surfaceflinger_udfps_lib {
++    name: "surfaceflinger_udfps_lib_defaults",
+     soong_config_variables: {
+-        target_surfaceflinger_fod_lib: {
+-            cppflags: ["-DTARGET_PROVIDES_FOD_LIB"],
++        target_surfaceflinger_udfps_lib: {
++            cppflags: ["-DTARGET_PROVIDES_UDFPS_LIB"],
+             whole_static_libs: ["%s"],
+         },
+     },
+diff --git a/config/BoardConfigSoong.mk b/config/BoardConfigSoong.mk
+index 991cd22..52e61b1 100644
+--- a/config/BoardConfigSoong.mk
++++ b/config/BoardConfigSoong.mk
+@@ -28,10 +28,10 @@ $(foreach v,$(EXPORT_TO_SOONG),$(eval $(call addVar,$(v))))
+ 
+ SOONG_CONFIG_NAMESPACES += hentaiGlobalVars
+ SOONG_CONFIG_hentaiGlobalVars += \
+-    target_surfaceflinger_fod_lib
++    target_surfaceflinger_udfps_lib
+ 
+ # Set default values
+-TARGET_SURFACEFLINGER_FOD_LIB ?= surfaceflinger_fod_lib
++TARGET_SURFACEFLINGER_UDFPS_LIB ?= surfaceflinger_udfps_lib
+ 
+ # Soong value variables
+-SOONG_CONFIG_hentaiGlobalVars_target_surfaceflinger_fod_lib := $(TARGET_SURFACEFLINGER_FOD_LIB)
++SOONG_CONFIG_hentaiGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFACEFLINGER_UDFPS_LIB)
+-- 
+2.34.1
+

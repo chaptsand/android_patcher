@@ -1,0 +1,32 @@
+From 5ada46d02ebfb8598f1cb2db83d3f636835b4728 Mon Sep 17 00:00:00 2001
+From: chaptsand <chaptsand@gmail.com>
+Date: Fri, 9 Sep 2022 01:42:20 +0000
+Subject: [PATCH 4/4] hentai: qcom: Add vendor qcom repository to soong
+ namespaces
+
+Change-Id: Ide05ac9730e3d892484eb9789c81744262d730e4
+---
+ config/BoardConfigQcom.mk | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/config/BoardConfigQcom.mk b/config/BoardConfigQcom.mk
+index 5129a35..56301d1 100644
+--- a/config/BoardConfigQcom.mk
++++ b/config/BoardConfigQcom.mk
+@@ -59,6 +59,13 @@ endif
+ PRODUCT_SOONG_NAMESPACES += \
+     hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
+ 
++PRODUCT_SOONG_NAMESPACES += \
++    vendor/qcom/opensource/commonsys-intf/display \
++    vendor/qcom/opensource/commonsys/display \
++    vendor/qcom/opensource/display
++
++PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/data-ipa-cfg-mgr
++
+ # QCOM HW crypto
+ ifeq ($(TARGET_HW_DISK_ENCRYPTION),true)
+     TARGET_CRYPTFS_HW_PATH ?= vendor/qcom/opensource/cryptfs_hw
+-- 
+2.34.1
+
