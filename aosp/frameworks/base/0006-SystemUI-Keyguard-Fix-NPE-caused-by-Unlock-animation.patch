@@ -1,0 +1,48 @@
+From c6541ce22b55b1f34b990fabe1563b9be04081fd Mon Sep 17 00:00:00 2001
+From: Akash Srivastava <akashniki@gmail.com>
+Date: Sat, 20 Aug 2022 16:36:17 +0700
+Subject: [PATCH 6/6] SystemUI: Keyguard: Fix NPE caused by Unlock animation
+
+* --------- beginning of crash
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: FATAL EXCEPTION: main
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: Process: com.android.systemui, PID: 3260
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: java.lang.NullPointerException
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardUnlockAnimationController.unlockToLauncherWithInWindowAnimations(KeyguardUnlockAnimationController.kt:544)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardUnlockAnimationController.playCannedUnlockAnimation(KeyguardUnlockAnimationController.kt:511)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardUnlockAnimationController.notifyStartSurfaceBehindRemoteAnimation(KeyguardUnlockAnimationController.kt:483)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardViewMediator.handleStartKeyguardExitAnimation(KeyguardViewMediator.java:2502)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardViewMediator.-$$Nest$mhandleStartKeyguardExitAnimation(Unknown Source:0)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardViewMediator$10.lambda$handleMessage$0(KeyguardViewMediator.java:2101)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardViewMediator$10.$r8$lambda$tRRycRRcvZ6XRX_BZChBqyIZn6c(Unknown Source:0)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardViewMediator$10$$ExternalSyntheticLambda0.run(Unknown Source:4)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.statusbar.phone.NotificationShadeWindowControllerImpl.batchApplyWindowLayoutParams(NotificationShadeWindowControllerImpl.java:460)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.systemui.keyguard.KeyguardViewMediator$10.handleMessage(KeyguardViewMediator.java:2099)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:201)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:288)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7898)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+08-20 11:23:18.611  3260  3260 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+
+Change-Id: I872677123ba9d075183397862a5dd6ef665d94e4
+---
+ .../systemui/keyguard/KeyguardUnlockAnimationController.kt      | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardUnlockAnimationController.kt b/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardUnlockAnimationController.kt
+index 5ffc3f101c6f..c9a3e722edbb 100644
+--- a/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardUnlockAnimationController.kt
++++ b/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardUnlockAnimationController.kt
+@@ -571,7 +571,7 @@ class KeyguardUnlockAnimationController @Inject constructor(
+ 
+         // Now that the Launcher surface (with its smartspace positioned identically to ours) is
+         // visible, hide our smartspace.
+-        lockscreenSmartspace!!.visibility = View.INVISIBLE
++        lockscreenSmartspace?.visibility = View.INVISIBLE
+ 
+         // As soon as the shade has animated out of the way, finish the keyguard exit animation. The
+         // in-window animations in the Launcher window will end on their own.
+-- 
+2.34.1
+
