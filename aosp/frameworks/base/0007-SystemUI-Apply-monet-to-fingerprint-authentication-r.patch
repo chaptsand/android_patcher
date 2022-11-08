@@ -1,8 +1,8 @@
 From eaff3894a88b80d0f682a15ad9b58cc1eea9295c Mon Sep 17 00:00:00 2001
 From: SagarMakhar <sagarmakhar@gmail.com>
 Date: Fri, 31 Dec 2021 23:53:48 +0530
-Subject: [PATCH] SystemUI: Apply monet to fingerprint authentication ripple
- animation
+Subject: [PATCH 07/15] SystemUI: Apply monet to fingerprint authentication
+ ripple animation
 
 Change-Id: I15d0f9fee13647062c651219b527e01a539b6909
 Signed-off-by: Joey Huab <joey@evolution-x.org>

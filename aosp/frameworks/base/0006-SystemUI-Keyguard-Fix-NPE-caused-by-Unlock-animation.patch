@@ -1,7 +1,7 @@
-From c6541ce22b55b1f34b990fabe1563b9be04081fd Mon Sep 17 00:00:00 2001
+From 5ddb92d2587467b5afd65264ba1c85f0221675a1 Mon Sep 17 00:00:00 2001
 From: Akash Srivastava <akashniki@gmail.com>
 Date: Sat, 20 Aug 2022 16:36:17 +0700
-Subject: [PATCH 6/6] SystemUI: Keyguard: Fix NPE caused by Unlock animation
+Subject: [PATCH 06/15] SystemUI: Keyguard: Fix NPE caused by Unlock animation
 
 * --------- beginning of crash
 08-20 11:23:18.611  3260  3260 E AndroidRuntime: FATAL EXCEPTION: main

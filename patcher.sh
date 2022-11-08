@@ -2,6 +2,7 @@
 
 ROOT="${PWD}"
 REPOS=(
+    'build/make'
     'build/soong'
     'external/tinycompress'
     'frameworks/base'

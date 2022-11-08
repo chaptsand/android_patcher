@@ -1,7 +1,7 @@
-From 7c3241a5c0c0d508577d39acda8ac7c93ec53867 Mon Sep 17 00:00:00 2001
+From 6f9e76a7e1c6506de7e55ac3754967b93c5819ab Mon Sep 17 00:00:00 2001
 From: Arian <arian.kulmer@web.de>
 Date: Sat, 20 Aug 2022 23:38:25 +0200
-Subject: [PATCH 1/6] udfps: Restore illumination dot for global hbm
+Subject: [PATCH 01/15] udfps: Restore illumination dot for global hbm
 
 UdfpsSurfaceView.java is imported from android-12.1.0_r22
 

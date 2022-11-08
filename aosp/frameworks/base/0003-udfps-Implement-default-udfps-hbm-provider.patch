@@ -1,7 +1,7 @@
-From 411025c2f7bc7f351d43cfc3829a3a51ee1f718d Mon Sep 17 00:00:00 2001
+From e4901fd4ee4d3e789326bc1d36ae1a0ee39bbe55 Mon Sep 17 00:00:00 2001
 From: LuK1337 <priv.luk@gmail.com>
 Date: Mon, 21 Feb 2022 23:33:58 +0100
-Subject: [PATCH 3/6] udfps: Implement default udfps hbm provider
+Subject: [PATCH 03/15] udfps: Implement default udfps hbm provider
 
 This should let us choose between multiple UdfpsHbmProvider
 implementations.

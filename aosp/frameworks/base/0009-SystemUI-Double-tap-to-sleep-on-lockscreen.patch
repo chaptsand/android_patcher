@@ -1,0 +1,70 @@
+From 05edf9c6771f8894857df75c17c93fa99d9abfb8 Mon Sep 17 00:00:00 2001
+From: Anas Karbila <anaskarbila@aospa.co>
+Date: Mon, 26 Oct 2020 10:27:40 -0300
+Subject: [PATCH 09/15] SystemUI: Double tap to sleep on lockscreen
+
+Change-Id: Icd8de7c5512362f22dcea9c3946347a1f0c13aba
+---
+ .../phone/NotificationPanelViewController.java | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelViewController.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelViewController.java
+index 3580fe6cdbc5..a91a1aeea655 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelViewController.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelViewController.java
+@@ -49,6 +49,7 @@ import android.app.ActivityManager;
+ import android.app.Fragment;
+ import android.app.StatusBarManager;
+ import android.content.ContentResolver;
++import android.content.Context;
+ import android.content.pm.ResolveInfo;
+ import android.content.res.Configuration;
+ import android.content.res.Resources;
+@@ -76,6 +77,7 @@ import android.transition.TransitionManager;
+ import android.util.IndentingPrintWriter;
+ import android.util.Log;
+ import android.util.MathUtils;
++import android.view.GestureDetector;
+ import android.view.LayoutInflater;
+ import android.view.MotionEvent;
+ import android.view.VelocityTracker;
+@@ -531,6 +533,8 @@ public class NotificationPanelViewController extends PanelViewController {
+     private NotificationShadeDepthController mDepthController;
+     private int mDisplayId;
+ 
++    private GestureDetector mDoubleTapGestureListener;
++
+     /**
+      * Cache the resource id of the theme to avoid unnecessary work in onThemeChanged.
+      *
+@@ -871,6 +875,16 @@ public class NotificationPanelViewController extends PanelViewController {
+         });
+         mBottomAreaShadeAlphaAnimator.setDuration(160);
+         mBottomAreaShadeAlphaAnimator.setInterpolator(Interpolators.ALPHA_OUT);
++        mDoubleTapGestureListener = new GestureDetector(mView.getContext(),
++                new GestureDetector.SimpleOnGestureListener() {
++            @Override
++            public boolean onDoubleTap(MotionEvent event) {
++                final PowerManager pm = (PowerManager) mView.getContext().getSystemService(
++                        Context.POWER_SERVICE);
++                pm.goToSleep(event.getEventTime());
++                return true;
++            }
++        });
+         mEntryManager = notificationEntryManager;
+         mConversationNotificationManager = conversationNotificationManager;
+         mAuthController = authController;
+@@ -4202,6 +4216,10 @@ public class NotificationPanelViewController extends PanelViewController {
+                     return false;
+                 }
+ 
++                if (mBarState == StatusBarState.KEYGUARD) {
++                    mDoubleTapGestureListener.onTouchEvent(event);
++                }
++
+                 // Make sure the next touch won't the blocked after the current ends.
+                 if (event.getAction() == MotionEvent.ACTION_UP
+                         || event.getAction() == MotionEvent.ACTION_CANCEL) {
+-- 
+2.34.1
+

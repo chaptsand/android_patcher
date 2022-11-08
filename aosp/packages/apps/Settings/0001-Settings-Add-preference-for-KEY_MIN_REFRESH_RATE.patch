@@ -1,7 +1,7 @@
-From 01f2ae1a3d75dd155fa1e6d32f7331aca473503d Mon Sep 17 00:00:00 2001
+From e87982e92600d18cfe0fad40a7d154b35bd792dc Mon Sep 17 00:00:00 2001
 From: LuK1337 <priv.luk@gmail.com>
 Date: Sun, 22 Nov 2020 03:15:07 +0100
-Subject: [PATCH] Settings: Add preference for KEY_MIN_REFRESH_RATE
+Subject: [PATCH 1/2] Settings: Add preference for KEY_MIN_REFRESH_RATE
 
 Squashed with the following:
 
