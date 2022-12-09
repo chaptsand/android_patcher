@@ -10,7 +10,6 @@ REPOS=(
     'hardware/interfaces'
     'hardware/libhardware'
     'hardware/qcom-caf/wlan'
-    'packages/apps/Settings'
     'system/core'
     'system/security'
     'system/sepolicy'

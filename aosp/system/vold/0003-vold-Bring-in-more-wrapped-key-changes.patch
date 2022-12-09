@@ -1,4 +1,4 @@
-From ad2c3bf3e370e13e6edcd5ef013aa505f53f2726 Mon Sep 17 00:00:00 2001
+From e17afa2db76d6dfd3b3cf66100a573e1a7a69314 Mon Sep 17 00:00:00 2001
 From: Pig <pig.priv@gmail.com>
 Date: Fri, 25 Sep 2020 22:56:33 +0800
 Subject: [PATCH 3/3] vold: Bring in more wrapped key changes
@@ -33,7 +33,7 @@ index 4f94a4c..85ffefd 100644
  }
  
 diff --git a/KeyStorage.cpp b/KeyStorage.cpp
-index 3ede67e..a6ef716 100644
+index b4abc27..74bfc72 100644
 --- a/KeyStorage.cpp
 +++ b/KeyStorage.cpp
 @@ -68,6 +68,8 @@ static const char* kFn_secdiscardable = "secdiscardable";
@@ -45,19 +45,19 @@ index 3ede67e..a6ef716 100644
  namespace {
  
  // Storage binding info for ensuring key encryption keys include a
-@@ -148,6 +150,12 @@ bool generateWrappedStorageKey(KeyBuffer* key) {
-     std::string key_temp;
+@@ -143,6 +145,12 @@ bool generateWrappedStorageKey(KeyBuffer* key) {
      auto paramBuilder = km::AuthorizationSetBuilder().AesEncryptionKey(AES_KEY_BYTES * 8);
      paramBuilder.Authorization(km::TAG_STORAGE_KEY);
+     if (!keystore.generateKey(paramBuilder, &key_temp)) return false;
 +
 +    km::KeyParameter param1;
 +    param1.tag = (km::Tag) (KM_TAG_FBE_ICE);
 +    param1.value = km::KeyParameterValue::make<km::KeyParameterValue::boolValue>(true);
 +    paramBuilder.push_back(param1);
 +
-     if (!generateKeystoreKey(keystore, paramBuilder, &key_temp)) return false;
      *key = KeyBuffer(key_temp.size());
      memcpy(reinterpret_cast<void*>(key->data()), key_temp.c_str(), key->size());
+     return true;
 diff --git a/KeyUtil.cpp b/KeyUtil.cpp
 index 25d5af3..4a02ec5 100644
 --- a/KeyUtil.cpp
@@ -79,5 +79,5 @@ index 25d5af3..4a02ec5 100644
                  return installKeyLegacy(key, policy->key_raw_ref);
              }
 -- 
-2.34.1
+2.30.2
 

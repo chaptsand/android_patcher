@@ -1,4 +1,4 @@
-From 212681ef65e77949c3318e2763345785d13c448a Mon Sep 17 00:00:00 2001
+From 7539f8aa8c912ab910ac7c5c810747e17d1b88ca Mon Sep 17 00:00:00 2001
 From: Neeraj Soni <neersoni@codeaurora.org>
 Date: Mon, 4 May 2020 23:49:03 +0530
 Subject: [PATCH 2/3] vold: Enable legacy support for wrapped key
@@ -37,5 +37,5 @@ index 5c9e644..50943fc 100644
          if (!options.set_dun && data_rec->fs_mgr_flags.checkpoint_blk) {
              LOG(ERROR)
 -- 
-2.34.1
+2.30.2
 

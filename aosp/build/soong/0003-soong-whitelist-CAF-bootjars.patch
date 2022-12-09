@@ -1,0 +1,27 @@
+From 67689a4b1f8057d4d91a21363d2e2ed754fe72d6 Mon Sep 17 00:00:00 2001
+From: Christian Oder <myself5@carbonrom.org>
+Date: Thu, 27 Apr 2017 22:54:04 +0200
+Subject: [PATCH 3/4] soong: whitelist CAF bootjars
+
+Change-Id: I0123cba89ad093772a3dbce2879b5980e09b8044
+---
+ scripts/check_boot_jars/package_allowed_list.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/scripts/check_boot_jars/package_allowed_list.txt b/scripts/check_boot_jars/package_allowed_list.txt
+index a02c19560..f18663143 100644
+--- a/scripts/check_boot_jars/package_allowed_list.txt
++++ b/scripts/check_boot_jars/package_allowed_list.txt
+@@ -251,3 +251,9 @@ com\.google\.i18n\.phonenumbers
+ # Packages used for Android in Chrome OS
+ org\.chromium\.arc
+ org\.chromium\.arc\..*
++
++# CodeAurora IMS functionality needed by frameworks/opt/telephony
++# as part of "ims-ext-common"
++org\.codeaurora\.ims.*
++# telephony-ext:
++org\.codeaurora\.internal.*
+-- 
+2.30.2
+

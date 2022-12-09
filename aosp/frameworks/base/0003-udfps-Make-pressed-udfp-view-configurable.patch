@@ -1,19 +1,19 @@
-From 21895de40fbeb5a7e3da6eccc4aa3f217cb37e5d Mon Sep 17 00:00:00 2001
+From 8faa8121db1ed7a3d7bf90bda171487bc65b7c18 Mon Sep 17 00:00:00 2001
 From: TheScarastic <warabhishek@gmail.com>
 Date: Wed, 6 Oct 2021 06:44:17 +0000
-Subject: [PATCH 02/15] udfps: Make pressed udfp view configurable
+Subject: [PATCH 3/4] udfps: Make pressed udfp view configurable
 
  * set a solid color by configuring config_udfpsColor
- * set a custom image by setting udfps_icon_pressed and making config_udfpsColor #00ffffff (transparent)
+ * set a custom image by setting udfps_icon_pressed and making
+   config_udfpsColor #00ffffff (transparent)
 
-Change-Id: I2460f6196d32fe46eb97f9a5c767bde5c9976681
+Change-Id: I028e0ba6ee012dc84cd365078ef4cbfbaad5cedc
 ---
- .../res/drawable-nodpi/udfps_icon_pressed.png | Bin 0 -> 108 bytes
- .../SystemUI/res/values/lineage_config.xml    |  19 ++++++++++++++++++
- .../systemui/biometrics/UdfpsSurfaceView.java |  16 ++++++++++++++-
- 3 files changed, 34 insertions(+), 1 deletion(-)
+ .../res/drawable-nodpi/udfps_icon_pressed.png   | Bin 0 -> 108 bytes
+ packages/SystemUI/res/values/lineage_config.xml |   3 +++
+ .../systemui/biometrics/UdfpsSurfaceView.java   |  16 +++++++++++++++-
+ 3 files changed, 18 insertions(+), 1 deletion(-)
  create mode 100644 packages/SystemUI/res/drawable-nodpi/udfps_icon_pressed.png
- create mode 100644 packages/SystemUI/res/values/lineage_config.xml
 
 diff --git a/packages/SystemUI/res/drawable-nodpi/udfps_icon_pressed.png b/packages/SystemUI/res/drawable-nodpi/udfps_icon_pressed.png
 new file mode 100644
@@ -28,32 +28,19 @@ literal 0
 HcmV?d00001
 
 diff --git a/packages/SystemUI/res/values/lineage_config.xml b/packages/SystemUI/res/values/lineage_config.xml
-new file mode 100644
-index 000000000000..4857330a3f3b
---- /dev/null
+index 97d677bb8a2e..953298d69bfa 100644
+--- a/packages/SystemUI/res/values/lineage_config.xml
 +++ b/packages/SystemUI/res/values/lineage_config.xml
-@@ -0,0 +1,19 @@
-+<!--
-+     Copyright (C) 2018 The LineageOS Project
-+
-+     Licensed under the Apache License, Version 2.0 (the "License");
-+     you may not use this file except in compliance with the License.
-+     You may obtain a copy of the License at
-+
-+          http://www.apache.org/licenses/LICENSE-2.0
-+
-+     Unless required by applicable law or agreed to in writing, software
-+     distributed under the License is distributed on an "AS IS" BASIS,
-+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-+     See the License for the specific language governing permissions and
-+     limitations under the License.
-+-->
-+<resources>
+@@ -19,4 +19,7 @@
+     <!-- Udfps display mode provider class name -->
+     <string name="config_udfpsDisplayModeProviderComponent">com.android.systemui.biometrics.DummyUdfpsDisplayModeProvider</string>
+ 
 +    <!-- Color of the UDFPS pressed view -->
 +    <color name="config_udfpsColor">#ffffffff</color>
-+</resources>
++
+ </resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsSurfaceView.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsSurfaceView.java
-index 77fad35d32d4..71e33a699934 100644
+index f5ada948dab7..2488132b508b 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsSurfaceView.java
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsSurfaceView.java
 @@ -19,6 +19,7 @@ package com.android.systemui.biometrics;
@@ -109,5 +96,5 @@ index 77fad35d32d4..71e33a699934 100644
          } finally {
              // Make sure the surface is never left in a bad state.
 -- 
-2.34.1
+2.30.2
 

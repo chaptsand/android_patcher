@@ -1,4 +1,4 @@
-From d794e495cf875deed332dc164a973e2eb4ada6a0 Mon Sep 17 00:00:00 2001
+From 0c5bbbd386e3be0d3eba91fe2f5d8820e12fc5b9 Mon Sep 17 00:00:00 2001
 From: daniml3 <danimoral1001@gmail.com>
 Date: Wed, 19 May 2021 15:56:21 +0200
 Subject: [PATCH 2/2] CompositionEngine: Request device composition for the
@@ -27,7 +27,7 @@ Change-Id: I8aeb98d18557ad4e971eaba74700ceb3058273ab
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/services/surfaceflinger/CompositionEngine/src/Output.cpp b/services/surfaceflinger/CompositionEngine/src/Output.cpp
-index f360504070..6403d016c4 100644
+index b724daa8ce..d17ddd9df6 100644
 --- a/services/surfaceflinger/CompositionEngine/src/Output.cpp
 +++ b/services/surfaceflinger/CompositionEngine/src/Output.cpp
 @@ -22,6 +22,7 @@
@@ -38,7 +38,7 @@ index f360504070..6403d016c4 100644
  #include <compositionengine/impl/HwcAsyncWorker.h>
  #include <compositionengine/impl/Output.h>
  #include <compositionengine/impl/OutputCompositionState.h>
-@@ -814,7 +815,10 @@ void Output::writeCompositionState(const compositionengine::CompositionRefreshAr
+@@ -835,7 +836,10 @@ void Output::writeCompositionState(const compositionengine::CompositionRefreshAr
  
  compositionengine::OutputLayer* Output::findLayerRequestingBackgroundComposition() const {
      compositionengine::OutputLayer* layerRequestingBgComposition = nullptr;
@@ -50,7 +50,7 @@ index f360504070..6403d016c4 100644
          auto* compState = layer->getLayerFE().getCompositionState();
  
          // If any layer has a sideband stream, we will disable blurs. In that case, we don't
-@@ -828,6 +832,16 @@ compositionengine::OutputLayer* Output::findLayerRequestingBackgroundComposition
+@@ -849,6 +853,16 @@ compositionengine::OutputLayer* Output::findLayerRequestingBackgroundComposition
          if (compState->backgroundBlurRadius > 0 || compState->blurRegions.size() > 0) {
              layerRequestingBgComposition = layer;
          }
@@ -68,5 +68,5 @@ index f360504070..6403d016c4 100644
      return layerRequestingBgComposition;
  }
 -- 
-2.34.1
+2.30.2
 
