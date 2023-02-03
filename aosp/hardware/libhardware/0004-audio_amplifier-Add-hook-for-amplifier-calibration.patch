@@ -1,0 +1,47 @@
+From ced918497f5eb437127d775eea7ef27d5d033c90 Mon Sep 17 00:00:00 2001
+From: Luofan Chen <clfbbn@gmail.com>
+Date: Wed, 17 Aug 2022 15:38:41 +0800
+Subject: [PATCH 4/4] audio_amplifier: Add hook for amplifier calibration
+
+Sometimes the amplifier will need to do calibration and fw download
+on the very first boot. For example, it will need to load calibration
+files from another partition, download calibration firmware to the
+amplifier and play silence sound for some seconds.
+
+While the current interface, amp_module_open, is able to handle most
+of the operations mentioned above, it is not able to allow the HAL
+to play silence sound, because it cannot get the needed audio_device,
+or adev, it is not able to enable the snd device, and write silence
+pcm data using pcm_write interface.
+
+This change adds an interface to allow the audio_amplifier HAL to
+calibrate the amplifier. It passes the required audio_device struct
+to audio_amplifier as a parameter, and is called after opening the
+audio_amplifier module.
+
+Signed-off-by: Luofan Chen <clfbbn@gmail.com>
+Change-Id: I9d497fb5d9716bbcbc6ef9035205ee18da994e72
+(cherry picked from commit d05ce0065b8147d05adf0d68c8a182ebbe668d27)
+---
+ include/hardware/audio_amplifier.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/hardware/audio_amplifier.h b/include/hardware/audio_amplifier.h
+index 90a21277..4b6f634e 100644
+--- a/include/hardware/audio_amplifier.h
++++ b/include/hardware/audio_amplifier.h
+@@ -132,6 +132,11 @@ typedef struct amplifier_device {
+      */
+     int (*set_feedback)(struct amplifier_device *device,
+         void *adev, uint32_t devices, bool enable);
++
++    /**
++     * Amplifier calibration
++     */
++    int (*calibrate)(void *adev);
+ } amplifier_device_t;
+ 
+ typedef struct amplifier_module {
+-- 
+2.30.2
+

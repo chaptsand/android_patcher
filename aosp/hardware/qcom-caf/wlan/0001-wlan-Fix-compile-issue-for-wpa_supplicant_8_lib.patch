@@ -1,0 +1,32 @@
+From 5e58246d87cb0a52d5ea370d92dfa3f517e5bac4 Mon Sep 17 00:00:00 2001
+From: Manjunatha Madana <quic_c_mamanj@quicinc.com>
+Date: Wed, 13 Apr 2022 17:06:34 +0530
+Subject: [PATCH] wlan: Fix compile issue for wpa_supplicant_8_lib
+
+send_and_recv_msgs function is guarded by
+CONFIG_ANDROID_S macro as the newer API has
+introduced two additional parameters with android S
+and later upgrades.
+
+CRs-Fixed: 3180516
+Change-Id: If9be6da4f1a57cc84b2f9dd95612a080e5666c40
+---
+ qcwcn/wpa_supplicant_8_lib/Android.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/qcwcn/wpa_supplicant_8_lib/Android.mk b/qcwcn/wpa_supplicant_8_lib/Android.mk
+index 1d21546..275d675 100644
+--- a/qcwcn/wpa_supplicant_8_lib/Android.mk
++++ b/qcwcn/wpa_supplicant_8_lib/Android.mk
+@@ -54,7 +54,7 @@ ifdef CONFIG_P2P
+ L_CFLAGS += -DCONFIG_P2P
+ endif
+ 
+-ifneq ( ,$(filter S 12, $(PLATFORM_VERSION)))
++ifneq ( ,$(filter Tiramisu T 13 S 12, $(PLATFORM_VERSION)))
+ L_CFLAGS += -DCONFIG_ANDROID_S
+ endif
+ 
+-- 
+2.34.1
+

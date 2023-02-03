@@ -1,0 +1,53 @@
+From 53fc78df16878b194876835371eee2ae01505689 Mon Sep 17 00:00:00 2001
+From: chaptsand <chaptsand@gmail.com>
+Date: Sun, 7 Nov 2021 17:48:56 +0000
+Subject: [PATCH 2/4] hentai: soong: Add extended_compress_format soong var
+
+---
+ build/soong/Android.bp     | 17 +++++++++++++++++
+ config/BoardConfigSoong.mk |  7 +++++++
+ 2 files changed, 24 insertions(+)
+
+diff --git a/build/soong/Android.bp b/build/soong/Android.bp
+index f71c478..39bb39d 100644
+--- a/build/soong/Android.bp
++++ b/build/soong/Android.bp
+@@ -18,3 +18,20 @@ surfaceflinger_udfps_lib {
+         },
+     },
+ }
++
++soong_config_module_type {
++    name: "extended_compress_format",
++    module_type: "cc_defaults",
++    config_namespace: "hentaiQcomVars",
++    bool_variables: ["supports_extended_compress_format"],
++    properties: ["cflags"],
++}
++
++extended_compress_format {
++    name: "extended_compress_format_defaults",
++    soong_config_variables: {
++        supports_extended_compress_format: {
++            cflags: ["-DENABLE_EXTENDED_COMPRESS_FORMAT"],
++        },
++    },
++}
+diff --git a/config/BoardConfigSoong.mk b/config/BoardConfigSoong.mk
+index 52e61b1..1ea612f 100644
+--- a/config/BoardConfigSoong.mk
++++ b/config/BoardConfigSoong.mk
+@@ -35,3 +35,10 @@ TARGET_SURFACEFLINGER_UDFPS_LIB ?= surfaceflinger_udfps_lib
+ 
+ # Soong value variables
+ SOONG_CONFIG_hentaiGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFACEFLINGER_UDFPS_LIB)
++
++SOONG_CONFIG_NAMESPACES += hentaiQcomVars
++SOONG_CONFIG_hentaiQcomVars += \
++    supports_extended_compress_format
++
++# Soong value variables
++SOONG_CONFIG_hentaiQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
+-- 
+2.30.2
+

@@ -1,0 +1,38 @@
+From bd00aeffffdb05fc231a9cee72fa74fe22447a33 Mon Sep 17 00:00:00 2001
+From: Dan Willemsen <dwillemsen@google.com>
+Date: Thu, 9 Jun 2022 09:34:23 -0700
+Subject: [PATCH 5/5] Obsolete BOARD_PLAT_*_SEPOLICY_DIR
+
+See If803a33efc38a970247919bf224c12b8c717f955 for more details.
+
+Bug: 235414673
+Test: treehugger
+Change-Id: Iff939a58e0a8238e085d63f28b5fa8d7982d82a0
+(cherry picked from commit 9dd75fe474d3415975ba4a05efd7a5f065633999)
+---
+ Android.mk | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/Android.mk b/Android.mk
+index 8fd90b0ca..50c265d58 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -54,15 +54,7 @@ PLAT_VENDOR_POLICY := $(LOCAL_PATH)/vendor
+ REQD_MASK_POLICY := $(LOCAL_PATH)/reqd_mask
+ 
+ SYSTEM_EXT_PUBLIC_POLICY := $(SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS)
+-ifneq (,$(BOARD_PLAT_PUBLIC_SEPOLICY_DIR))
+-  # TODO: Disallow BOARD_PLAT_*
+-  SYSTEM_EXT_PUBLIC_POLICY += $(BOARD_PLAT_PUBLIC_SEPOLICY_DIR)
+-endif
+ SYSTEM_EXT_PRIVATE_POLICY := $(SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS)
+-ifneq (,$(BOARD_PLAT_PRIVATE_SEPOLICY_DIR))
+-  # TODO: Disallow BOARD_PLAT_*
+-  SYSTEM_EXT_PRIVATE_POLICY += $(BOARD_PLAT_PRIVATE_SEPOLICY_DIR)
+-endif
+ 
+ PRODUCT_PUBLIC_POLICY := $(PRODUCT_PUBLIC_SEPOLICY_DIRS)
+ PRODUCT_PRIVATE_POLICY := $(PRODUCT_PRIVATE_SEPOLICY_DIRS)
+-- 
+2.30.2
+
