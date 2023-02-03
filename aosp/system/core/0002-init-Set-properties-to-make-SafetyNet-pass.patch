@@ -1,7 +1,7 @@
-From 664dfc2ad0262952e2db7e90c729c92afc040131 Mon Sep 17 00:00:00 2001
+From 5deacf4d89512fc2f63470b0c77f0bb2fb607256 Mon Sep 17 00:00:00 2001
 From: Danny Lin <danny@kdrag0n.dev>
 Date: Wed, 7 Oct 2020 00:24:54 -0700
-Subject: [PATCH] init: Set properties to make SafetyNet pass
+Subject: [PATCH 2/2] init: Set properties to make SafetyNet pass
 
 Google's SafetyNet integrity checks will check the values of these
 properties when performing basic attestation. Setting fake values helps
@@ -49,7 +49,7 @@ index 3302c4310..a14eea376 100644
  
  bool UpdateAllPartitionMetadata(FastbootDevice* device, const std::string& super_name,
 diff --git a/init/property_service.cpp b/init/property_service.cpp
-index 9f7c21543..d1e802cca 100644
+index 26341b196..b25cfbb98 100644
 --- a/init/property_service.cpp
 +++ b/init/property_service.cpp
 @@ -1282,6 +1282,13 @@ static void ProcessBootconfig() {
@@ -82,5 +82,5 @@ index 9f7c21543..d1e802cca 100644
      // properties set in DT always have priority over the command-line ones.
      ProcessKernelDt();
 -- 
-2.34.1
+2.30.2
 

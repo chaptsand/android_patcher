@@ -1,4 +1,4 @@
-From 7943451d31468687a60481d0b6f6c11ed6a8f5bd Mon Sep 17 00:00:00 2001
+From f089446b72fe21af4a5d5eae2406bdc7db3622fd Mon Sep 17 00:00:00 2001
 From: Phanindra Babu Pabba <pabba@codeaurora.org>
 Date: Wed, 23 Jun 2021 17:56:02 +0530
 Subject: [PATCH] Handle key parameter conversion for FBE_ICE tag
@@ -16,7 +16,7 @@ Change-Id: I6ea35bd1b9ebe08d7069c596a985153bd017c28d
  1 file changed, 14 insertions(+)
 
 diff --git a/keystore2/src/km_compat/km_compat.cpp b/keystore2/src/km_compat/km_compat.cpp
-index 6d0630b..90ca1d0 100644
+index d513db0..61111ed 100644
 --- a/keystore2/src/km_compat/km_compat.cpp
 +++ b/keystore2/src/km_compat/km_compat.cpp
 @@ -59,6 +59,8 @@ namespace KMV1 = ::aidl::android::hardware::security::keymint;
@@ -48,5 +48,5 @@ index 6d0630b..90ca1d0 100644
          legacyKeyGenParams, [&](V4_0_ErrorCode error, const hidl_vec<uint8_t>& keyBlob,
                                  const V4_0_KeyCharacteristics& keyCharacteristics) {
 -- 
-2.34.1
+2.30.2
 

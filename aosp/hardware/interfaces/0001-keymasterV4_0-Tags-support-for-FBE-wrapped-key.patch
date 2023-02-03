@@ -1,4 +1,4 @@
-From 9060fc297caaaf5a8f5e5ff171b7d633414b4a29 Mon Sep 17 00:00:00 2001
+From e290af98bfa7162ecdf3d11c6c56eeb5d628a9cd Mon Sep 17 00:00:00 2001
 From: Shivaprasad Hongal <shongal@codeaurora.org>
 Date: Mon, 23 Jul 2018 12:38:03 -0700
 Subject: [PATCH] keymasterV4_0: Tags support for FBE wrapped key.
@@ -30,5 +30,5 @@ index ea4097189..d7358f36f 100644
      return static_cast<TagType>(static_cast<uint32_t>(tag) & static_cast<uint32_t>(0xf0000000));
  }
 -- 
-2.34.1
+2.30.2
 

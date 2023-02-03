@@ -1,7 +1,7 @@
-From 7539f8aa8c912ab910ac7c5c810747e17d1b88ca Mon Sep 17 00:00:00 2001
+From 7798c607c3c112ab3a79be3202d2a964057c078a Mon Sep 17 00:00:00 2001
 From: Neeraj Soni <neersoni@codeaurora.org>
 Date: Mon, 4 May 2020 23:49:03 +0530
-Subject: [PATCH 2/3] vold: Enable legacy support for wrapped key
+Subject: [PATCH 2/4] vold: Enable legacy support for wrapped key
 
 Legacy wrapped key support was dropped while merging changes
 to support multiple versions of dm-default key driver in kernel.
