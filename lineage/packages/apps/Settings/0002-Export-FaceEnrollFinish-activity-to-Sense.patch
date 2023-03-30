@@ -1,0 +1,28 @@
+From b11da87672ee322c7d0ba426b3eebb68e32fbf7b Mon Sep 17 00:00:00 2001
+From: Chris Crump <chriscrawford893@gmail.com>
+Date: Sun, 30 Oct 2022 04:04:59 -0400
+Subject: [PATCH 2/2] Export FaceEnrollFinish activity to Sense
+
+Sense calls this activity after enroll is completed
+
+Change-Id: I4d756d9eb91f07bf86f2a96deee465aa256608fc
+---
+ AndroidManifest.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index c4fba3defc..fcb3acbd7f 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -2245,7 +2245,7 @@
+             android:screenOrientation="portrait"/>
+ 
+         <activity android:name=".biometrics.face.FaceEnrollFinish"
+-            android:exported="false"
++            android:exported="true"
+             android:screenOrientation="portrait"/>
+ 
+         <activity android:name=".biometrics.BiometricHandoffActivity"
+-- 
+2.30.2
+

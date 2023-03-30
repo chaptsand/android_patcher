@@ -1,0 +1,41 @@
+From 90d11bb74310f8a5a8153d5329fda421fafae168 Mon Sep 17 00:00:00 2001
+From: Chris Crump <chriscrawford893@gmail.com>
+Date: Wed, 2 Nov 2022 15:20:13 -0400
+Subject: [PATCH 3/6] SystemUI: Hide camera chip when using face unlock
+
+Follows stock Android behavior, camera chip should not be shown when sense is the incoming package
+
+Change-Id: I29eb1e0fabb570829f29d3a3f23c9e897b1a7df0
+---
+ .../android/systemui/privacy/AppOpsPrivacyItemMonitor.kt  | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/privacy/AppOpsPrivacyItemMonitor.kt b/packages/SystemUI/src/com/android/systemui/privacy/AppOpsPrivacyItemMonitor.kt
+index de34cd6b23ca..8915d9d59218 100644
+--- a/packages/SystemUI/src/com/android/systemui/privacy/AppOpsPrivacyItemMonitor.kt
++++ b/packages/SystemUI/src/com/android/systemui/privacy/AppOpsPrivacyItemMonitor.kt
+@@ -91,6 +91,10 @@ class AppOpsPrivacyItemMonitor @Inject constructor(
+                 if (code in OPS_LOCATION && !locationAvailable) {
+                     return
+                 }
++                // Hide incoming chip from sense caller package
++                if (packageName == "co.aospa.sense") {
++                    return
++                }
+                 if (userTracker.userProfiles.any { it.id == UserHandle.getUserId(uid) } ||
+                         code in USER_INDEPENDENT_OPS) {
+                     logger.logUpdatedItemFromAppOps(code, uid, packageName, active)
+@@ -213,6 +217,10 @@ class AppOpsPrivacyItemMonitor @Inject constructor(
+             AppOpsManager.OP_RECORD_AUDIO -> PrivacyType.TYPE_MICROPHONE
+             else -> return null
+         }
++        // Hide incoming chip from sense caller package
++        if (appOpItem.packageName == "co.aospa.sense") {
++            return null
++        }
+         val app = PrivacyApplication(appOpItem.packageName, appOpItem.uid)
+         return PrivacyItem(type, app, appOpItem.timeStartedElapsed, appOpItem.isDisabled)
+     }
+-- 
+2.30.2
+

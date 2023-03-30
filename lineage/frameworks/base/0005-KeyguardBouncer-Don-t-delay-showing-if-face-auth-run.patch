@@ -1,0 +1,36 @@
+From 6440a00e1d696ca268e0b3e5c3060a403371c0b4 Mon Sep 17 00:00:00 2001
+From: jhenrique09 <jhsv09@gmail.com>
+Date: Sat, 12 Feb 2022 17:46:32 -0300
+Subject: [PATCH 5/6] KeyguardBouncer: Don't delay showing if face auth running
+
+Change-Id: I1897aa22a9c29627b2f03e14f093151453df7be4
+---
+ .../systemui/statusbar/phone/KeyguardBouncer.java    | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBouncer.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBouncer.java
+index 000fe140882c..b82e9ead24a8 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBouncer.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBouncer.java
+@@ -236,17 +236,7 @@ public class KeyguardBouncer {
+ 
+             // Split up the work over multiple frames.
+             DejankUtils.removeCallbacks(mResetRunnable);
+-            if (mKeyguardStateController.isFaceAuthEnabled()
+-                    && !mKeyguardUpdateMonitor.getCachedIsUnlockWithFingerprintPossible(
+-                            KeyguardUpdateMonitor.getCurrentUser())
+-                    && !needsFullscreenBouncer()
+-                    && mKeyguardUpdateMonitor.isUnlockingWithBiometricAllowed(
+-                            BiometricSourceType.FACE)
+-                    && !mKeyguardBypassController.getBypassEnabled()) {
+-                mHandler.postDelayed(mShowRunnable, BOUNCER_FACE_DELAY);
+-            } else {
+-                DejankUtils.postAfterTraversal(mShowRunnable);
+-            }
++            DejankUtils.postAfterTraversal(mShowRunnable);
+ 
+             mKeyguardStateController.notifyBouncerShowing(true /* showing */);
+             dispatchStartingToShow();
+-- 
+2.30.2
+

@@ -1,0 +1,40 @@
+From 35851994aa9fdd2bb6f9cd75c8d18f016e679b4e Mon Sep 17 00:00:00 2001
+From: Paranoid Android <build@aospa.local>
+Date: Fri, 30 Dec 2022 11:47:33 +0100
+Subject: [PATCH 4/6] Update FaceSense service for QPR1
+
+Change-Id: I5111c2f44be1e5e2af096eeef6f1c429e3cfa72d
+---
+ .../biometrics/sensors/face/sense/FaceAuthenticationClient.java | 2 +-
+ .../server/biometrics/sensors/face/sense/FaceEnrollClient.java  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceAuthenticationClient.java b/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceAuthenticationClient.java
+index 42b4572cc4a1..c1c795fa4a91 100644
+--- a/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceAuthenticationClient.java
++++ b/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceAuthenticationClient.java
+@@ -102,7 +102,7 @@ class FaceAuthenticationClient extends AuthenticationClient<ISenseService> {
+     @Override
+     protected ClientMonitorCallback wrapCallbackForStart(@NonNull ClientMonitorCallback callback) {
+         return new ClientMonitorCompositeCallback(
+-                getLogger().createALSCallback(true /* startWithClient */), callback);
++                getLogger().getAmbientLightProbe(true /* startWithClient */), callback);
+     }
+ 
+     @Override
+diff --git a/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceEnrollClient.java b/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceEnrollClient.java
+index 0e42933712b7..060ef4fc8346 100644
+--- a/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceEnrollClient.java
++++ b/services/core/java/com/android/server/biometrics/sensors/face/sense/FaceEnrollClient.java
+@@ -72,7 +72,7 @@ public class FaceEnrollClient extends EnrollClient<ISenseService> {
+     @Override
+     protected ClientMonitorCallback wrapCallbackForStart(@NonNull ClientMonitorCallback callback) {
+         return new ClientMonitorCompositeCallback(
+-                getLogger().createALSCallback(true /* startWithClient */), callback);
++                getLogger().getAmbientLightProbe(true /* startWithClient */), callback);
+     }
+ 
+     @Override
+-- 
+2.30.2
+
